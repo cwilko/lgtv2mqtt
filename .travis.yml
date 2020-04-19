@@ -1,7 +1,3 @@
-language: node_js
-
-arch: arm32
-
 sudo: required
 
 services:
@@ -12,8 +8,10 @@ branches:
     - master
 
 install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - docker build -t cwilko/lgtv2mqtt:arm32v7 .
 
 script:
+  - docker run -d --rm cwilko/smart-home-actions:arm32v7
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push cwilko/lgtv2mqtt:arm32v7
