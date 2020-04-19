@@ -8,4 +8,4 @@ WORKDIR /usr/node_app
 RUN apk add --no-cache git
 RUN npm install --production
 
-CMD ["./init.sh"]
+CMD ["./entrypoint.sh"]
