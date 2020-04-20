@@ -85,8 +85,12 @@ channelup, channeldown, record
                     
 #### lgtv/set/youtube 
 
-Youtube video ID as payload. Runs youtube app and opens video.                    
-                    
+Youtube video ID as payload. Runs youtube app and opens video.       
+
+#### lgtv/set/open 
+
+Open URL within browser.
+
 
 ### topics published by lgtv2mqtt
 

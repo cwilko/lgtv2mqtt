@@ -113,6 +113,23 @@ mqtt.on('message', (topic, payload) => {
                     sendPointerEvent('button', {name: (String(payload)).toUpperCase()});
                     break;
 
+                case 'open':
+                    lgtv.request('ssap://system.launcher/open', {target: String(payload)});
+                    break;
+
+                case 'max':
+                    lgtv.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket',
+                      function(err, sock) {
+                          if (!err) {
+                              const command = "move\n" + "dx:" + 11 + "\n" + "dy:-8\n" + "down:0\n" + "\n";
+                              for (let i=0; i < 22; i++) {
+                                sock.send(command);
+                              }
+                              setTimeout(()=>sock.send('click'), 1000);
+                          }
+                      });
+                      break;
+
                 default:
                     lgtv.request('ssap://' + topic.replace(config.name + '/set/', ''), payload || null);
             }
