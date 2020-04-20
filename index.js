@@ -114,21 +114,10 @@ mqtt.on('message', (topic, payload) => {
                     break;
 
                 case 'open':
+                case 'open_max':
                     lgtv.request('ssap://system.launcher/open', {target: String(payload)});
+                    if (parts[2] === 'open_max') setTimeout(clickMax, 5000);                    
                     break;
-
-                case 'max':
-                    lgtv.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket',
-                      function(err, sock) {
-                          if (!err) {
-                              const command = "move\n" + "dx:" + 11 + "\n" + "dy:-8\n" + "down:0\n" + "\n";
-                              for (let i=0; i < 22; i++) {
-                                sock.send(command);
-                              }
-                              setTimeout(()=>sock.send('click'), 1000);
-                          }
-                      });
-                      break;
 
                 default:
                     lgtv.request('ssap://' + topic.replace(config.name + '/set/', ''), payload || null);
@@ -218,4 +207,17 @@ function sendPointerEvent(type, payload) {
             }
         }
     );
+}
+
+function clickMax() {
+    lgtv.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket',
+        function(err, sock) {
+            if (!err) {
+                const command = "move\n" + "dx:" + 11 + "\n" + "dy:-8\n" + "down:0\n" + "\n";
+                for (let i=0; i < 22; i++) {
+                  sock.send(command);
+                }
+                setTimeout(()=>sock.send('click'), 1000);
+            }
+        });
 }

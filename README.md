@@ -91,6 +91,9 @@ Youtube video ID as payload. Runs youtube app and opens video.
 
 Open URL within browser.
 
+#### lgtv/set/open_max 
+
+Open URL within browser and maximise the window.
 
 ### topics published by lgtv2mqtt
 
